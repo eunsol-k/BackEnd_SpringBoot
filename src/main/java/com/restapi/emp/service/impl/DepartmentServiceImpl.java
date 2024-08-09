@@ -7,9 +7,11 @@ import com.restapi.emp.exception.ResourceNotFoundException;
 import com.restapi.emp.repository.DepartmentRepository;
 import com.restapi.emp.service.DepartmentService;
 import lombok.AllArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @AllArgsConstructor
@@ -26,9 +28,11 @@ public class DepartmentServiceImpl implements DepartmentService {
 
     @Override
     public DepartmentDto getDepartmentById(Long departmentId) {
-        Department department = departmentRepository.findById(departmentId)
-                .orElseThrow(() ->
-                        new ResourceNotFoundException("Department is not exists with a given id: " + departmentId)
+        String errMsg = String.format("Department is not exists with a given id: %s", departmentId);
+
+        Optional<Department> optionalDepartment = departmentRepository.findById(departmentId);
+        Department department = optionalDepartment.orElseThrow(() ->
+                        new ResourceNotFoundException(errMsg, HttpStatus.NOT_FOUND)
         );
         return DepartmentMapper.mapToDepartmentDto(department);
     }

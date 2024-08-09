@@ -4,6 +4,7 @@ import com.restapi.emp.entity.Department;
 import com.restapi.emp.entity.Employee;
 import com.restapi.emp.repository.DepartmentRepository;
 import com.restapi.emp.repository.EmployeeRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
@@ -14,12 +15,18 @@ import java.util.List;
 
 @Component
 @Profile("prod") // 본 InsertFunner가 동작하지 않도록 하려면 Profile에 다른 값을 주면 됨
+@RequiredArgsConstructor
 public class EmpDepInsertRunner implements ApplicationRunner {
-    @Autowired
-    DepartmentRepository departmentRepository;
+    final DepartmentRepository departmentRepository;
+    final EmployeeRepository employeeRepository;
 
-    @Autowired
-    EmployeeRepository employeeRepository;
+    /*
+    // Constructor Injection
+    public EmpDepInsertRunner(DepartmentRepository departmentRepository, EmployeeRepository employeeRepository) {
+        this.departmentRepository = departmentRepository;
+        this.employeeRepository = employeeRepository;
+    }
+    */
 
     @Override
     public void run(ApplicationArguments args) throws Exception {
