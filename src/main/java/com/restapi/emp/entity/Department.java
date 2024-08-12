@@ -5,12 +5,14 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.DynamicUpdate;
 
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
+@DynamicUpdate // 부분적으로 업데이트 (set 시 해당 칼럼만 업데이트)
 @Table(name = "departments")
 public class Department {
 
