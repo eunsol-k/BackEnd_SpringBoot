@@ -21,10 +21,10 @@ public class EmployeeController {
     // Build Add Employee REST API
     // @Valid 요건을 충족하지 않으면 Errors로 에러 정보를 받음
     @PostMapping
-    public ResponseEntity<?> createEmployee(@RequestBody @Valid EmployeeDto employeeDto, Errors errors){
-        if (errors.hasErrors()) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errors.getAllErrors());
-        }
+    public ResponseEntity<?> createEmployee(@RequestBody @Valid EmployeeDto employeeDto) {
+//        if (errors.hasErrors()) {
+//            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errors.getAllErrors());
+//        }
         EmployeeDto savedEmployee = employeeService.createEmployee(employeeDto);
         return new ResponseEntity<>(savedEmployee, HttpStatus.CREATED);
     }
