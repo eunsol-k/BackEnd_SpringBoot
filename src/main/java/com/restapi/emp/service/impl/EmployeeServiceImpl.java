@@ -65,17 +65,23 @@ public class EmployeeServiceImpl implements EmployeeService {
     public EmployeeDto updateEmployee(Long employeeId, EmployeeDto updatedEmployee) {
         Employee employee = Common.getEmployee(employeeId, employeeRepository);
 
-        employee.setFirstName(updatedEmployee.getFirstName());
-        employee.setLastName(updatedEmployee.getLastName());
-        employee.setEmail(updatedEmployee.getEmail());
+        if (updatedEmployee.getFirstName() != null) {
+            employee.setFirstName(updatedEmployee.getFirstName());
+        }
+        if (updatedEmployee.getLastName() != null) {
+            employee.setLastName(updatedEmployee.getLastName());
+        }
+        if (updatedEmployee.getEmail() != null) {
+            employee.setEmail(updatedEmployee.getEmail());
+        }
 
         Department department = Common.getDepartment(updatedEmployee.getDepartmentId(), departmentRepository);
 
         employee.setDepartment(department);
 
-        Employee updatedEmployeeObj = employeeRepository.save(employee);
+        // Employee updatedEmployeeObj = employeeRepository.save(employee);
 
-        return EmployeeMapper.mapToEmployeeDto(updatedEmployeeObj);
+        return EmployeeMapper.mapToEmployeeDto(employee);
     }
 
     @Override
