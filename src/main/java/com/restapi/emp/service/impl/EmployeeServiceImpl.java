@@ -89,6 +89,6 @@ public class EmployeeServiceImpl implements EmployeeService {
 
         Employee employee = Common.getEmployee(employeeId, employeeRepository);
 
-        employeeRepository.deleteById(employeeId);
+        employeeRepository.delete(employee);
     }
 }
