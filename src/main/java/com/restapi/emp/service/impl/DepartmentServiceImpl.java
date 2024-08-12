@@ -44,15 +44,6 @@ public class DepartmentServiceImpl implements DepartmentService {
         return DepartmentMapper.mapToDepartmentDto(department);
     }
 
-    private Department getDepartment(Long departmentId) {
-        String errMsg = String.format("Department is not exists with a given id: %s", departmentId);
-        Department department = departmentRepository.findById(departmentId)
-                .orElseThrow(() ->
-                        new ResourceNotFoundException(errMsg, HttpStatus.NOT_FOUND)
-                );
-        return department;
-    }
-
     @Transactional(readOnly = true)
     @Override
     public List<DepartmentDto> getAllDepartments() {
@@ -68,7 +59,7 @@ public class DepartmentServiceImpl implements DepartmentService {
 
     @Override
     public DepartmentDto updateDepartment(Long departmentId, DepartmentDto updatedDepartment) {
-        Department department = getDepartment(departmentId);
+        Department department = Common.getDepartment(departmentId, departmentRepository);
         //Dirty Check - setter method 호출
         if (updatedDepartment.getDepartmentName() != null) {
             department.setDepartmentName(updatedDepartment.getDepartmentName());
@@ -84,7 +75,7 @@ public class DepartmentServiceImpl implements DepartmentService {
 
     @Override
     public void deleteDepartment(Long departmentId) {
-        Department department = getDepartment(departmentId);
+        Department department = Common.getDepartment(departmentId, departmentRepository);
         departmentRepository.delete(department);
     }
 }
